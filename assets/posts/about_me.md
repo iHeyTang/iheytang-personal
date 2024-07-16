@@ -4,6 +4,8 @@ Full-stack Developer.
 
 Web 全栈开发选手，希望有朝一日可以成为一位独立开发者。
 
+主操 React+Nodejs，Vue 只是为了工作之余的扩展学习。
+
 [github](https://www.github.com/iHeyTang)
 
 ### 为什么要做开源项目的执念
