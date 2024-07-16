@@ -1,7 +1,7 @@
 <template>
   <UHeader>
     <template #logo>
-      <UAvatar src="/avatar.png" class="w-auto h-6" />
+      <UAvatar src="/avatar.png" class="w-auto h-6" /> iHeyTang
     </template>
   </UHeader>
 
@@ -18,7 +18,7 @@
       </template>
 
       <template #default>
-        <div class="my-4 p-4 rounded-lg bg-white">
+        <div class="markdown-body my-4 p-4 rounded-lg bg-white">
           <div v-html="docContent"></div>
         </div>
       </template>
@@ -62,9 +62,5 @@ function traversePostList(postList: TreeNode[]) {
 </script>
 
 <style>
-h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
+@import url("~/assets/css/github-markdown.css");
 </style>

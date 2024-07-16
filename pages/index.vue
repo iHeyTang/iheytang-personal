@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home">
     <NuxtRouteAnnouncer />
     <div
       style="
@@ -32,7 +32,7 @@
         </UButton>
       </div>
       <div style="display: flex">
-        <UButton variant="link" to="/posts/projects">个人作品</UButton>
+        <UButton variant="link" to="/posts/projects/cms">个人作品</UButton>
         <UButton variant="link" to="/posts/notes">黑糖笔记</UButton>
       </div>
     </div>
@@ -40,7 +40,8 @@
 </template>
 
 <style>
-body {
+.home {
+  height: 100vh;
   background: linear-gradient(to bottom, #69ff9740, #00e4ff30);
 }
 
