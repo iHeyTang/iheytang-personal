@@ -9,13 +9,14 @@
       height: 64px;
     "
   >
-    <div
+    <ULink
+      to="/"
       class="px-10 py-4"
-      style="display: flex; align-items: center; gap: 24px"
+      style="display: flex; align-items: center; gap: 24px; width: fit-content;"
     >
       <UAvatar src="/avatar.png" class="w-auto h-6" />
       <div>iHeyTang</div>
-    </div>
+    </ULink>
     <UDivider />
   </div>
 
