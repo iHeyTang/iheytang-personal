@@ -1,33 +1,45 @@
 <template>
-  <UHeader>
-    <template #logo>
-      <UAvatar src="/avatar.png" class="w-auto h-6" /> iHeyTang
-    </template>
-  </UHeader>
+  <div
+    style="
+      position: sticky;
+      top: 0;
+      background-color: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      height: 64px;
+    "
+  >
+    <div
+      class="px-10 py-4"
+      style="display: flex; align-items: center; gap: 24px"
+    >
+      <UAvatar src="/avatar.png" class="w-auto h-6" />
+      <div>iHeyTang</div>
+    </div>
+    <UDivider />
+  </div>
 
-  <UContainer>
-    <UPage>
-      <template #left>
-        <UAside>
-          <UNavigationTree
-            :links="navigationTree"
-            default-open
-            :multiple="false"
-          />
-        </UAside>
-      </template>
-
-      <template #default>
-        <div class="markdown-body my-4 p-4 rounded-lg bg-white">
-          <div v-html="docContent"></div>
-        </div>
-      </template>
-    </UPage>
-  </UContainer>
+  <div style="display: flex; align-items: start; position: relative">
+    <div
+      class="px-10 py-4"
+      style="
+        min-width: 300px;
+        height: calc(100vh - 64px);
+        overflow: scroll;
+        position: sticky;
+        top: 64px;
+      "
+    >
+      <NavigationTree :links="navigationTree" default-open :multiple="false" />
+    </div>
+    <div class="px-10 py-4">
+      <div class="markdown-body" v-html="docContent"></div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import type { NavigationTree } from "@nuxt/ui-pro/types";
+import type { NavigationTreeLink } from "~/components/NavigationTree/index.vue";
 import type { TreeNode } from "~/server/api/post_list";
 
 const route = useRoute();
@@ -44,10 +56,10 @@ const { data: docContent } = await useFetch(
  * @param postList
  */
 function traversePostList(postList: TreeNode[]) {
-  const result: NavigationTree[] = [];
+  const result: NavigationTreeLink[] = [];
 
   for (const post of postList) {
-    const node: NavigationTree = {
+    const node: NavigationTreeLink = {
       label: post.name,
       replace: true,
       to: `/posts/${post.path}`.replace(/\.md$/, ""),
