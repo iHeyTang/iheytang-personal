@@ -8,7 +8,7 @@ export type TreeNode = {
 };
 
 export default defineEventHandler(() => {
-  return fetchTraverseFiles({ entryDir: "", base: "./public/posts" });
+  return fetchTraverseFiles({ entryDir: "", base: "public/posts" });
 });
 
 /**
