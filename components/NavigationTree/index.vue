@@ -10,7 +10,10 @@
             <li
               v-for="child in link.children"
               :key="child.to.toString()"
-              style="padding-left: 12px"
+              style="
+                margin-left: 24px;
+                border-left: 1px solid var(--primary-color);
+              "
             >
               <ULink :class="linkClass(child.to)" :to="child.to">
                 {{ child.label }}
@@ -54,14 +57,13 @@ const linkClass = (to: NavigationTreeLink["to"]) => {
 .nav-tree .link {
   display: block;
   padding: 8px 16px;
-  border-radius: 4px;
   transition: 0.3s;
 }
 
 .nav-tree .link.active {
-  background-color: rgba(0, 0, 0, 0.1);
+  color: var(--primary-color);
 }
 .nav-tree .link:hover {
-  color: #1cd8d2;
+  color: var(--primary-color);
 }
 </style>

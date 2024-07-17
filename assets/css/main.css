@@ -4,6 +4,10 @@
 
 :root {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  --primary-color: #69db7c;
+  --primary-color-1: #69db7cff;
+  --primary-color-2: #69db7caa;
 }
 
 body {
