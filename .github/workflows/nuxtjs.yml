@@ -59,13 +59,11 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build output
         run: ${{ steps.detect-package-manager.outputs.manager }} run build
-      - name: Archive production artifacts with version
-        run: tar -czvf dist.tar.gz .output
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: dist-${{ github.run_number }}.tar.gz
-          path: dist-${{ github.run_number }}.tar.gz
+          name: .output
+          path: .output
 
   # Deployment job
   deploy:
@@ -78,7 +76,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: dist-${{ github.run_number }}.tar.gz
+          name: .output
 
       - name: Copy files to ECS
         uses: appleboy/scp-action@master
@@ -87,7 +85,7 @@ jobs:
           username: ${{ secrets.ECS_USER }}
           key: ${{ secrets.ECS_SSH_KEY }}
           port: ${{ secrets.ECS_PORT }}
-          source: dist-${{ github.run_number }}.tar.gz
+          source: .output
           target: ${{ secrets.DEPLOYMENT_DIR }}
 
       - name: Deploy to ECS
@@ -99,5 +97,4 @@ jobs:
           port: ${{ secrets.ECS_PORT }}
           script: |
             cd ${{ secrets.DEPLOYMENT_DIR }}
-            tar -xzvf dist-${{ github.run_number }}.tar.gz
             pm2 restart all --update-env
