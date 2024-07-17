@@ -2,10 +2,7 @@
   <div class="nav-tree">
     <ul>
       <li v-for="link in props.links" :key="link.to.toString()">
-        <ULink
-          :class="linkClass(link.to)"
-          :to="link.to || link.children?.[0].to"
-        >
+        <ULink :class="linkClass(link.to)" :to="link.to">
           {{ link.label }}
         </ULink>
         <template v-if="link.children" :active="path === link.to">

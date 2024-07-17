@@ -24,7 +24,8 @@
     <div
       class="px-10 py-4"
       style="
-        min-width: 300px;
+        min-width: 400px;
+        max-width: 400px;
         height: calc(100vh - 64px);
         overflow: scroll;
         position: sticky;
@@ -33,7 +34,7 @@
     >
       <NavigationTree :links="navigationTree" default-open :multiple="false" />
     </div>
-    <div class="px-10 py-4">
+    <div class="px-10 py-4" style="width: 100%">
       <NuxtPage />
     </div>
   </div>
@@ -57,7 +58,7 @@ function traversePostList(postList: TreeNode[]) {
     const node: NavigationTreeLink = {
       label: post.name,
       replace: true,
-      to: `/posts/${post.path}`.replace(/\.md$/, ""),
+      to: `/posts${post.path}`.replace(/\.md$/, ""),
     };
     result.push(node);
     if (post.children) {
