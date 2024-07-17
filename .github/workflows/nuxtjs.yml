@@ -57,12 +57,13 @@ jobs:
             ${{ runner.os }}-nuxt-build-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Static HTML export with Nuxt
-        run: ${{ steps.detect-package-manager.outputs.manager }} run generate
-      - name: Generate version file
-        run: echo "version=$(git describe --tags)" > dist/version.txt
       - name: Archive production artifacts with version
-        run: tar -czvf dist-$(git describe --tags).tar.gz dist
+        run: tar -czvf dist.tar.gz .output
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-${{ github.run_number }}.tar.gz
+          path: dist-${{ github.run_number }}.tar.gz
 
   # Deployment job
   deploy:
@@ -75,7 +76,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: dist.tar.gz
+          name: dist-${{ github.run_number }}.tar.gz
 
       - name: Copy files to ECS
         uses: appleboy/scp-action@master
@@ -84,7 +85,7 @@ jobs:
           username: ${{ secrets.ECS_USER }}
           key: ${{ secrets.ECS_SSH_KEY }}
           port: ${{ secrets.ECS_PORT }}
-          source: "dist.tar.gz"
+          source: dist-${{ github.run_number }}.tar.gz
           target: ${{ secrets.DEPLOYMENT_DIR }}
 
       - name: Deploy to ECS
@@ -95,10 +96,6 @@ jobs:
           key: ${{ secrets.ECS_SSH_KEY }}
           port: ${{ secrets.ECS_PORT }}
           script: |
-            export APP_VERSION=$(git describe --tags)
-            echo "Deploying version $APP_VERSION"
             cd ${{ secrets.DEPLOYMENT_DIR }}
-            mkdir -p versions/$APP_VERSION
-            tar -xzvf dist.tar.gz -C versions/$APP_VERSION
-            ln -sfn versions/$APP_VERSION current
+            tar -xzvf dist-${{ github.run_number }}.tar.gz
             pm2 restart all --update-env
