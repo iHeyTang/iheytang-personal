@@ -41,10 +41,9 @@ const props = defineProps<{
 }>();
 
 const route = useRoute();
-const path = route.path;
 
 const linkClass = (to: NavigationTreeLink["to"]) => {
-  return `link ${path === to ? "active" : ""}`;
+  return `link ${route.path === to ? "active" : ""}`;
 };
 </script>
 
