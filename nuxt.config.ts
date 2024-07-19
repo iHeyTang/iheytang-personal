@@ -8,4 +8,9 @@ export default defineNuxtConfig({
     icons: ["mdi"],
   },
   ssr: true,
+  app: {
+    head: {
+      title: "iHeyTang",
+    },
+  },
 });

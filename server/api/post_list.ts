@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { getFileTitle } from "./utils";
 
 export type TreeNode = {
   path: string;
@@ -43,31 +44,4 @@ const fetchTraverseFiles = (params: { entryDir: string; base: string }) => {
   });
 
   return tree;
-};
-
-/**
- * 获取标题名
- *
- * 即文件内容第一个大标题作为名称，如果是目录的话找目录下的index.md
- * 如果找不到标题名，就使用文件名作为标题名
- * @param path
- */
-const getFileTitle = (path: string) => {
-  const filename = path.split("/").pop()!;
-
-  const stat = fs.statSync(path);
-  const p = stat.isDirectory() ? getDirDefaultEntryFile(path) : path;
-  if (!p) return filename;
-
-  const content = fs.readFileSync(p, "utf-8");
-  const match = content.match(/^#\s+(.+)/);
-  if (match?.[1]) return match[1];
-
-  return filename;
-};
-
-const getDirDefaultEntryFile = (path: string) => {
-  if (fs.existsSync(`${path}/index.md`)) {
-    return `${path}/index.md`;
-  }
 };
